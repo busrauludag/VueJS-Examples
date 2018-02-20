@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue First</title>
+
+  <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+
+  <style>
+    .demo{
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+      margin: 10px;
+      display: inline-block;
+    }
+    .red{
+      background-color: red;
+    }
+    .green{
+      background-color: green;
+    }
+    .blue{
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app-6">
+    <!-- :class="{ red : attachRed, blue : >attachRed }" -->
+    <div class="demo" 
+         @click="attachRed = !attachRed" 
+         :class="divClasses"
+    >
+    </div>
+    <div class="demo" :class="{ red : attachRed }"></div>
+    <div class="demo" :class="[ color, { red : attachRed } ]"></div>
+    <!-- { 'background-color' : color } -->
+    <div class="demo" :style="{ backgroundColor : color }, myStyle"></div>
+    <div class="demo" :style="[ myStyle, { height : width + 'px' }]"></div>
+    <br>
+    <input type="text" v-model="color">
+    <input type="text" v-model="width">
+  </div>
+  <hr>
+  <div id="app-5">
+    <!-- v-on: yerine @ kullanabiliriz. -->
+    <button v-on:click="changeLink">
+      Click to Change Link
+    </button>
+    <!-- v-bind:href yerine :href kullanabiliriz -->
+    <a v-bind:href="link">Link</a>
+  </div>
+  <hr>
+  <div id="app-4">
+    <!-- 
+       // bazı işlemler tekrar etmek zorunda kalıyor bu nedenle aynı şeyi iki lere yazmaktansa 
+       // computed property kullanılır!
+     -->
+      <!-- <button v-on:click="increase">Increase</button>
+      <button v-on:click="decrease">Decrease</button>
+      <p>Counter: {{ counter }}</p>
+      <p>Result: {{ result }}</p> -->
+
+      <button v-on:click="counter++">Increase</button>
+      <button v-on:click="counter--">Decrease</button>
+      <button v-on:click="secondCounter++">Increase Second</button>
+      <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+      <p>Result (1): {{ resultFun() }}</p>
+      <p>Result (2): {{ result }} | {{ output }}</p>
+  </div>
+  <hr>
+  <div id="app-3">
+    <input type="text" v-model="name">
+    <p>{{ name }}</p>
+  </div>
+  <hr>
+  <div id="app-2">
+    <button v-on:click="increaseData">
+      Click to increase (1)
+    </button>
+    <button v-on:click="counter++">
+      Click to increase (1)
+    </button>
+    <button v-on:click="increaseDataTwo(2, $event)">
+      Click to increase (2)
+    </button>
+    <p>{{ counter }}</p>
+    <p>{{ counter * 2 > 10 ? '10dan büyük' : '10dan küçük' }}</p>
+    <p v-on:mousemove="updateCoor">
+      Coordinates: {{ x }} / {{ y }}
+      - <span v-on:mousemove="dummy">DEAD SPOT - 1</span>
+      <!-- .stop event modifier:  stopPropagation işlevi görür -->
+      - <span v-on:mousemove.stop="">DEAD SPOT - 1</span>
+    </p>
+    <!-- boşluk bıraktığında ve enter a bastığında çalışır -->
+    <input type="text" v-on:keyup.enter.space="alertFunc">
+  </div>
+  <hr>
+  <div id="app">
+    <input type="text" v-on:input="changeTitle">
+    <p v-once>
+      {{ title }}
+    </p>
+    <p>
+      {{ sayHello() }}
+    </p>
+    <a v-bind:href="link">Go to Google!</a>
+    <p v-html="finishedLink"></p>
+  </div>
+    
+
+  <script>
+    new Vue({
+      el: '#app-6',
+      data: {
+        attachRed : false,
+        color: 'green',
+        width: 100
+      },
+      computed: {
+        divClasses: function () {
+          return {
+            red: this.attachRed,
+            blue: !this.attachRed
+          }
+        },
+        myStyle: function () {
+          return {
+            backgroundColor : this.color,
+            width: this.width + 'px'
+          }
+        }
+      },
+      methods: {
+       
+      }
+    });
+    new Vue({
+      el: '#app-5',
+      data: {
+        link: 'http://google.com'
+      },
+      methods: {
+        changeLink: function () {
+          this.link = 'http://apple.com';
+        }
+      }
+    });
+    new Vue({
+      el: '#app-4',
+      data: {
+        counter: 0,
+        secondCounter: 0,
+        result: ''
+      },
+      // bazı işlemler tekrar etmek zorunda kalıyor bu nedenle aynı şeyi iki lere yazmaktansa
+      // computed property kullanılır!
+        // methods: {
+        //   increase: function () {
+        //     this.counter++;
+        //     this.result = this.counter > 5 ? '5ten büyük' : '5ten küçük';
+        //   },
+        //   decrease: function () {
+        //     this.counter--;
+        //     this.result = this.counter > 5 ? '5ten büyük' : '5ten küçük';
+        //   }
+        // }
+      methods: {
+        resultFun: function(){
+          console.log('Method');
+          return this.counter > 5 ? '5ten büyük' : '5ten küçük';
+        }
+      },
+      computed:{
+        output: function(){
+          console.log('Computed');
+          return this.counter > 5 ? '5ten büyük' : '5ten küçük';
+        }
+      },
+      watch: {
+        counter: function (value) {
+          var vm = this;
+          setTimeout(function () {
+            vm.counter = 0;
+          }, 2000);
+        }
+      }
+    });
+    new Vue({
+      el: '#app-3',
+      data: {
+        name: 'Büşra'
+      },
+      methods: {
+        
+      }
+    });
+    new Vue({
+      el: '#app-2',
+      data: {
+       counter: 0,
+       x: 0,
+       y: 0
+      },
+      methods: {
+        increaseData: function () {
+          this.counter++;
+        },
+        increaseDataTwo: function (step, evt) {
+          this.counter = this.counter + step;
+          console.log(evt);
+        },
+        updateCoor: function (event) {
+          this.x = event.clientX;
+          this.y = event.clientY;
+        },
+        dummy: function (event) {
+          event.stopPropagation();
+        },
+        alertFunc: function () {
+          alert();
+        }
+      }
+    });
+    new Vue({
+      el: '#app',
+      data: {
+        title: 'Page Title!',
+        link: 'http://www.google.com',
+        finishedLink: '<a href="http://google.com">Google Link</a>'
+      },
+      methods:{
+        changeTitle: function (event) {
+          // inputa girilen değeri yeni title değişkenine atar
+          this.title = event.target.value;
+        },
+        sayHello: function () {
+          // değişken değerinin üzerine yazma
+          // bunu engellemek için html tag'de v-once kullanılır ve bir kez bind edilmesi sağlanır
+          this.title = 'Hii!';
+          return 'Hellooo!';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
