@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6 col-md-4 col-lg-3">
+  <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
     <div class="card">
       <div class="card-body quote">
         <slot></slot>

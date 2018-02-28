@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <form action="">
-      <div class="col-sm-8 col-offset-sm-2 form-group">
+      <div class="col-sm-8 offset-sm-2 form-group">
         <label for="">Quote</label>
         <textarea class="form-control" name="" id="" v-model="quote"
-                  cols="30" rows="10"></textarea>
+                  cols="30" rows="3"></textarea>
       </div>
-      <div class="col-sm-8 col-offset-sm-2 form-group">
+      <div class="col-sm-8 offset-sm-2 form-group">
         <button class="btn btn-primary" @click.prevent="createNew">Add New Quote</button>
       </div>
     </form>
@@ -21,8 +21,9 @@
       }
     },
     methods: {
-      cretaeNew() {
-        
+      createNew() {
+        this.$emit('quoteAdded', this.quote);
+        this.quote = '';
       }
     }
   }
