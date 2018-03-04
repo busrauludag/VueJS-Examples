@@ -39,13 +39,18 @@
           </div>
           <div class="form-group">
             <label for="priority">Priority</label>
-            <select id="priority" class="form-control">
+            <select id="priority" class="form-control" v-model="selectedPriority">
               <option v-for="priority in priorities" :selected="priority == 'Medium'">{{ priority }}</option>
+              <!-- v-model yoksa :selected çalışır -->
             </select>
           </div>
-          <button class="btn btn-primary">Submit!</button>
+          <div class="form-group">
+            <app-switch v-model="dataSwitch"></app-switch>
+          </div>
+          <button class="btn btn-primary"
+                  @click.prevent="submitted">Submit!</button>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" v-if="isSubmitted">
           <br>
           <div class="card">
             <div class="card-header">
@@ -53,7 +58,7 @@
             </div>
             <div class="card-body">
               <p>Mail: {{ userData.email }}</p>
-              <p>Password: {{ userData.password }}</p>
+              <p>Password: {{ userData.password }} - {{ changePassword }}</p>
               <p>Age: {{ userData.age }}</p>
               <p style="white-space: pre">Message: {{ message }}</p>
               <p>
@@ -63,8 +68,8 @@
                 <li v-for="item in sendMail">{{ item }}</li>
               </ul>
               <p>Gender: {{ gender }}</p>
-              <p>Priority:</p>
-              <p>Switched:</p>
+              <p>Priority: {{ selectedPriority }}</p>
+              <p>Switched: {{ dataSwitch }}</p>
             </div>
           </div>
         </div>
@@ -74,6 +79,7 @@
 </template>
 
 <script>
+  import { Switcher } from "./Switcher.vue";
   export default {
     data() {
       return {
@@ -85,9 +91,33 @@
         message: 'My message',
         sendMail: [],
         gender: 'Male',
-        priorities: ['High', 'Medium', 'Low']
+        selectedPriority: 'High',
+        priorities: ['High', 'Medium', 'Low'],
+        dataSwitch: true,
+        isSubmitted: false
       }
-    }
+    },
+    methods: {
+      submitted(){
+        this.isSubmitted = true;
+      }
+    },
+    computed: {
+      changePassword: function () {
+        let arrayLength = this.userData.password.length;
+        let makeStar = function () {
+          let star = '';
+          for (let i = 0; i < arrayLength; i++) {
+            star += '*';
+          }
+          return star;
+        }
+        return this.userData.password.replace(this.userData.password, makeStar());
+      }
+    },
+    components: {
+      appSwitch: Switcher
+    },
   }
 </script>
 
