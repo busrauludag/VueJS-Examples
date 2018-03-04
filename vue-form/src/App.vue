@@ -79,7 +79,7 @@
 </template>
 
 <script>
-  import { Switcher } from "./Switcher.vue";
+  import Switcher from "./Switcher.vue";
   export default {
     data() {
       return {

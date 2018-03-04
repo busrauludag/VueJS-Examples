@@ -28,8 +28,55 @@
     içerik paret'a yazılır, child'da slot tagi kullanılır. <slot>
   - <component>, dinamik componentler oluştururken kullanılır, Dynamic Components, silinip tekrar oluşturulurlar
     Deactivated and Activated lifecycle hooks
-  - 
+  
 
+    Directives
+    - v-text, v-html, 
+    - Hooks: bind(el, binding, vnode) = once directive is attached
+             inserted (el, binding, vnode) = inserted in parent node
+             update(el, binding, vnode, oldVnode) = once component is updated (without children)
+             componentUpdated(el, binding, vnode, oldVnode) = once component is updated (with children)
+             unbind(el, binding, vnode) = once directive is removed
+    - in main.js (as Globally)
+        Vue.directive('highlight', {
+          bind(el, binding, vnode){
+            // el.style.bacgroundColor = 'green';
+            // el.style.bacgroundColor = binding.value;
+
+            // argüman varsa bg renkli, yoksa yazı renkli olsun
+            if(binding.arg == 'background') 
+              el.style.backgroundColor = binding.value;
+            else
+              el.style.color = binding.value;
+          }
+        });
+        <p v-highlight:background="'red'">asdfghj</p>
+      - in .vue file (as Locally)
+        directives:{
+          'local-highlight': {
+             bind(el, binding, vnode){ 
+               // el.style.bacgroundColor = 'green'; 
+               // el.style.bacgroundColor = binding.value; 
+               // argüman varsa bg renkli, yoksa yazı renkli olsun 
+               if(binding.arg == 'background') el.style.backgroundColor = binding.value; 
+               else el.style.color = binding.value; 
+               }
+          }
+        }
+
+    Filters and Mixins
+     - filters and mixins
+     - filters kullanımı directives 'te olduğu gibi
+        Vue.filter('name')
+        filters:{
+          'name'(){
+            rgedfg
+          }
+        }
+     - Mixins: aynı işlevi yapan kodlar tek bir dosyada toplanır. Glabal tanımlamak tüm componentleri etkiler.
+     Mixin paylaşılmış (shared) değldir. 1.componentte yapılan işlem, mixin başka component tarafından
+     kullanılsa da sadece 1.yi etkiler, diğer componenti etkilemez.
+      
  -->
 
 
