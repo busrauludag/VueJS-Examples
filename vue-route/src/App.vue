@@ -1,21 +1,28 @@
 <template>
   <div class="container">
-    <div class="col-12">
+    <div class="col-12 mt-3">
       <h3>Routing</h3>
-      
-    </div>    
+      <hr>
+      <app-header class="my-3"></app-header>
+      <!-- route'ları yükler -->
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import Header from './components/Header.vue';
+
+  export default {
+    data() {
+      return {
+        msg: 'Welcome to Your Vue.js App'
+      }
+    },
+    components:{
+      appHeader: Header
     }
   }
-}
 </script>
 
 <style>
