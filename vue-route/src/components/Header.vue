@@ -9,8 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <router-link class="nav-item nav-link" to="/" active-class="active" exact>Home</router-link>
-          <router-link class="nav-item nav-link" to="/user/1" active-class="active">User 1</router-link>
-          <router-link class="nav-item nav-link" to="/user/2" active-class="active">User 2</router-link>
+          <router-link class="nav-item nav-link" to="/user" active-class="active">User</router-link>
           <!-- User seçiliyken Home'u da aktif yapmasın diye 'exact' özelliği kullanılır. !! -->
           <!-- 
             router-link'te tag='li' kullanarak o elementi li yapıp, 

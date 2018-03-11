@@ -3,9 +3,17 @@
     <div class="col-12 mt-3">
       <h3>Routing</h3>
       <hr>
-      <app-header class="my-3"></app-header>
+
+      <!-- <app-header class="my-3"></app-header> -->
+
       <!-- route'ları yükler -->
+      <!-- 
+        name kullanarak birden fazla router-view kullanabailiriz ve bunu ilgili componentlerde 
+        çağırabiliriz (components object). 
+      -->
+      <router-view name="header-top" class="my-3"></router-view>
       <router-view></router-view>
+      <router-view name="header-bottom" class="my-3"></router-view>
     </div>
   </div>
 </template>
