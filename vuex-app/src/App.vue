@@ -3,24 +3,38 @@
     <div class="row">
       <div class="col-12">
         <h1>VUEX</h1>
-        
+        <!-- 
+          <app-result :counter="counter"></app-result>
+          <hr>
+          <app-counter @updated="counter += $event"></app-counter>
+         -->
+        <app-result></app-result>
+        <app-another-result></app-another-result>
+        <hr>
+        <app-counter></app-counter>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Counter from './components/Counter.vueğ*'
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import Counter from './components/Counter.vue';
+  import Result from './components/Result.vue';
+  import AnotherResult from './components/AnotherResult.vue';
+  export default {
+    // data() {
+    //   return {
+    //    counter: 0
+    //   }
+    // },
+    components:{
+      appCounter: Counter,
+      appResult: Result,
+      appAnotherResult: AnotherResult
     }
   }
-}
 </script>
 
 <style>
-@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+  @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 </style>
