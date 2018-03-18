@@ -9,7 +9,11 @@
     //props: ['counter']
     computed: {
       counter() {
-        return this.$store.state.counter * 2;
+        // with Satate
+        //return this.$store.state.counter * 2;
+
+        // with Getters
+        return this.$store.getters.doubleCounter;
       }
     }
   }
