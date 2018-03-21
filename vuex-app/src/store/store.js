@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     // içerisinde uygulamada kullandığımız değişkenlerden yazarız
-    counter: 0
+    counter: 0,
+    value: 0
   },
   getters: {
     doubleCounter: state => {
@@ -14,32 +15,42 @@ export const store = new Vuex.Store({
     },
     stringCounter: state => {
       return state.counter + ' Clicks';
+    },
+    value: state => {
+      return state.value;
     }
   },
   mutations: {
-    increment: state => {
-      state.counter++;
+    increment: (state, payload) => {
+      state.counter += payload;
     },
-    decrement: state => {
-      state.counter--;
+    decrement: (state, payload) => {
+      state.counter -= payload;
+    },
+    updateValue: (state, payload) => {
+      state.value = payload;
     }
   },
   actions: {
-    increment: ({ commit }) => {
-      commit('increment');
+    // mutations'lar çağırılır
+    increment: ({ commit }, payload) => {
+      commit('increment', payload);
     },
-    decrement: ({ commit }) => {
-      commit('decrement');
+    decrement: ({ commit }, payload) => {
+      commit('decrement', payload);
     },
-    asyncIncrement: ({ commit }) => {
+    asyncIncrement: ({ commit }, payload) => {
       setTimeout(() => {
-        commit('increment');
-      }, 1000);
+        commit('increment', payload.by);
+      }, payload.duration);
     },
-    asyncDecrement: ({ commit }) => {
+    asyncDecrement: ({ commit }, payload) => {
       setTimeout(() => {
-        commit('decrement');
-      }, 1000);
+        commit('decrement', payload.by);
+      }, payload.duration);
+    },
+    updateValue: ({ commit }, payload) => {
+      commit('updateValue', payload);
     }
   }
 });

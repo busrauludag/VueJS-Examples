@@ -13,6 +13,9 @@
         <hr>
         <app-counter></app-counter>
         <app-another-counter></app-another-counter>
+        <hr>
+        <input type="text" class="form-control" v-model="value">
+        <p>{{ value }}</p>
       </div>
     </div>
   </div>
@@ -29,6 +32,25 @@
     //    counter: 0
     //   }
     // },
+    computed: {
+      // value(){
+      //   return this.$store.getters.value;
+      // }
+
+      value: {
+        get() {
+          return this.$store.getters.value;
+        },
+        set(value){
+          this.$store.dispatch('updateValue', value);
+        }
+      }
+    },
+    methods: {
+      updateValue(event){
+        this.$store.dispatch('updateValue', event.target.value);
+      }
+    },
     components:{
       appCounter: Counter,
       appResult: Result,
